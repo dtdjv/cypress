@@ -94,4 +94,45 @@ describe('Standard user test cases.', () => {
         cy.get('.shopping_cart_link').click()    
         cy.get('.cart_item').should('contain.text', product[random])
     })     
+
+    it('User can add more than one product to cart.', function () {          
+        
+        let product = Object.values(fix.productList)
+
+        cy.login(fix.normalUser.login, fix.normalUser.password)
+        cy.get('.shopping_cart_link').within(() =>{
+            cy.get('span').should('not.exist')
+        })        
+        addProduct(product[1])
+        addProduct(product[3])
+        addProduct(product[5])             
+        cy.get('.shopping_cart_link').within(() =>{
+            cy.get('span').should('exist').invoke('text').then((count) => {                
+                return Number(count)
+            }).should('be.equal', 3)
+        }) 
+        cy.get('.shopping_cart_link').click()    
+        cy.get('.cart_item').its('length').should('be.equal', 3)
+    })    
+
+    it.only('User can add more than one product to cart.', function () {          
+        
+        let product = Object.values(fix.productList)
+
+        cy.login(fix.normalUser.login, fix.normalUser.password)
+        cy.get('.shopping_cart_link').within(() =>{
+            cy.get('span').should('not.exist')
+        })        
+        addProduct(product[1])
+        addProduct(product[3])
+        addProduct(product[5])             
+        cy.get('.shopping_cart_link').within(() =>{
+            cy.get('span').should('exist').invoke('text').then((count) => {                
+                return Number(count)
+            }).should('be.equal', 3)
+        }) 
+        cy.get('.shopping_cart_link').click()    
+        cy.get('.cart_item').its('length').should('be.equal', 3)
+    })    
+
 })
