@@ -112,7 +112,7 @@ describe('Standard user test cases.', () => {
             }).should('be.equal', 3)
         }) 
         cy.get('.shopping_cart_link').click()    
-        cy.get('.cart_item').its('length').should('be.equal', 3) // do dodania each i po nazwie sprawdzić
+        cy.get('.cart_item').its('length').should('be.equal', 3)
     })    
 
     it('User can remove products from cart.', function () { 
@@ -148,6 +148,8 @@ describe('Standard user test cases.', () => {
         
         let random = Math.floor(Math.random() * 5)
         let product = Object.values(fix.productList)
+        const checkout = ['Checkout: Your Information', 'Checkout: Overview', 'Checkout: Complete!']
+        const customerInfo = ['Im', 'Tester', '48-156']
 
         cy.login(fix.normalUser.login, fix.normalUser.password)
         cy.get('.shopping_cart_link').within(() =>{
@@ -161,6 +163,17 @@ describe('Standard user test cases.', () => {
         }) 
         cy.get('.shopping_cart_link').click()    
         cy.get('.cart_item').should('contain.text', product[random])
+        cy.get('[data-test="checkout"]').click()
+        cy.get('.title').should('contain.text', checkout[0])
+        cy.get('[data-test="firstName"]').type(customerInfo[0])
+        cy.get('[data-test="lastName"]').type(customerInfo[1])
+        cy.get('[data-test="postalCode"]').type(customerInfo[2])
+        cy.get('[data-test="continue"]').click()
+        cy.get('.title').should('contain.text', checkout[1])
+        cy.get('.inventory_item_name').should('contain.text', product[random])
+        cy.get('[data-test="finish"]').click()
+        cy.get('.title').should('contain.text', checkout[2])
+        cy.get('[data-test="back-to-products"]').should('exist')
     })   
 
 })
