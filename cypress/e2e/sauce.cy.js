@@ -16,6 +16,12 @@ describe('Standard user test cases.', () => {
         cy.get('[data-test="product_sort_container"]').select(sortBy)
         cy.get('[data-test="product_sort_container"]').should('contain.text', sortBy)
     }
+
+    function addProduct (product) {
+        cy.contains(product).parent().parent().parent().within(() => {
+            cy.contains('Add to cart').click()
+        })
+    }
     
     it('User can access login page', function () {
 
@@ -69,5 +75,23 @@ describe('Standard user test cases.', () => {
             i++
         }
      })
-     
+
+     it('User can add one product to cart.', function () {    
+        
+        let random = Math.floor(Math.random() * 5)
+        let product = Object.values(fix.productList)
+
+        cy.login(fix.normalUser.login, fix.normalUser.password)
+        cy.get('.shopping_cart_link').within(() =>{
+            cy.get('span').should('not.exist')
+        })        
+        addProduct(product[random])
+        cy.get('.shopping_cart_link').within(() =>{
+            cy.get('span').should('exist').invoke('text').then((count) => {                
+                return Number(count)
+            }).should('be.greaterThan', 0)
+        }) 
+        cy.get('.shopping_cart_link').click()    
+        cy.get('.cart_item').should('contain.text', product[random])
+    })     
 })

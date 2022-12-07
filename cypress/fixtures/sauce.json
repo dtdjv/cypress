@@ -14,5 +14,13 @@
     "performanceUser": {
         "login": "performance_glitch_user",
         "password": "secret_sauce"
+    },
+    "productList": {
+        "product1": "Sauce Labs Backpack",
+        "product2": "Sauce Labs Bike Light",
+        "product3": "Sauce Labs Bolt T-Shirt",
+        "product4": "Sauce Labs Fleece Jacket",
+        "product5": "Sauce Labs Onesie",
+        "product6": "Test.allTheThings() T-Shirt (Red)"        
     }
 }
