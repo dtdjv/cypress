@@ -112,20 +112,20 @@ describe('Standard user test cases.', () => {
             }).should('be.equal', 3)
         }) 
         cy.get('.shopping_cart_link').click()    
-        cy.get('.cart_item').its('length').should('be.equal', 3)
+        cy.get('.cart_item').its('length').should('be.equal', 3) // do dodania each i po nazwie sprawdzić
     })    
 
-    it.only('User can add more than one product to cart.', function () {          
+    it('User can remove products from cart.', function () { 
         
-        let product = Object.values(fix.productList)
+        let product = Object.values(fix.productList)        
 
         cy.login(fix.normalUser.login, fix.normalUser.password)
         cy.get('.shopping_cart_link').within(() =>{
             cy.get('span').should('not.exist')
         })        
-        addProduct(product[1])
-        addProduct(product[3])
-        addProduct(product[5])             
+        addProduct(product[0])
+        addProduct(product[2])
+        addProduct(product[4])             
         cy.get('.shopping_cart_link').within(() =>{
             cy.get('span').should('exist').invoke('text').then((count) => {                
                 return Number(count)
@@ -133,6 +133,34 @@ describe('Standard user test cases.', () => {
         }) 
         cy.get('.shopping_cart_link').click()    
         cy.get('.cart_item').its('length').should('be.equal', 3)
+        cy.get('button[data-test="continue-shopping"]').click()        
+        cy.contains('Remove').click()
+        cy.get('.shopping_cart_link').within(() =>{
+            cy.get('span').should('exist').invoke('text').then((count) => {                
+                return Number(count)
+            }).should('be.equal', 2)
+        }) 
+        cy.get('.shopping_cart_link').click()    
+        cy.get('.cart_item').its('length').should('be.equal', 2)        
     })    
+
+    it('User can go through the full sales process.', function () {    
+        
+        let random = Math.floor(Math.random() * 5)
+        let product = Object.values(fix.productList)
+
+        cy.login(fix.normalUser.login, fix.normalUser.password)
+        cy.get('.shopping_cart_link').within(() =>{
+            cy.get('span').should('not.exist')
+        })        
+        addProduct(product[random])
+        cy.get('.shopping_cart_link').within(() =>{
+            cy.get('span').should('exist').invoke('text').then((count) => {                
+                return Number(count)
+            }).should('be.greaterThan', 0)
+        }) 
+        cy.get('.shopping_cart_link').click()    
+        cy.get('.cart_item').should('contain.text', product[random])
+    })   
 
 })
