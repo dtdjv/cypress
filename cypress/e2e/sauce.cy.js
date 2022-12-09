@@ -192,8 +192,7 @@ describe('Locked user test cases.', () => {
     it('User cant login due to locked account.', function () {
 
         cy.get('[data-test="error"]').should('contain.text', 'Epic sadface: Sorry, this user has been locked out.')
-
     })
-
-
 })
+
+
