@@ -1,14 +1,29 @@
 /// <reference types="cypress" />
 
+describe('Check if service is avaible.', () => {  
+
+    it('User can access login page', function () {
+
+        cy.visit('https://www.saucedemo.com/')      
+        cy.get('[data-test="username"]').should('be.visible')
+        cy.get('[data-test="password"]').should('be.visible')
+        cy.get('[data-test="login-button"]').should('be.visible')        
+    })
+    
+
+})
+
 describe('Standard user test cases.', () => {   
 
     let fix
     beforeEach(function ()  {         
      
         cy.fixture('sauce').then(function (sauce)  {
-            fix = sauce        
-        })
-        cy.visit('https://www.saucedemo.com/')
+            fix = sauce
+            
+            cy.visit('https://www.saucedemo.com/') 
+            cy.login(fix.normalUser.login, fix.normalUser.password)            
+        })        
     })
 
     function sortList (sortBy) {
@@ -21,20 +36,12 @@ describe('Standard user test cases.', () => {
         cy.contains(product).parent().parent().parent().within(() => {
             cy.contains('Add to cart').click()
         })
-    }
-    
-    it('User can access login page', function () {
-
-    cy.get('[data-test="username"]').should('be.visible')
-    cy.get('[data-test="password"]').should('be.visible')
-    cy.get('[data-test="login-button"]').should('be.visible')
-    })
+    }  
 
     it('User can login.', function () {
 
         const itemToCheck = 'Products'
-
-        cy.login(fix.normalUser.login, fix.normalUser.password)
+        
         cy.get('.title').should('contain.text', itemToCheck)    
      })
 
@@ -42,7 +49,6 @@ describe('Standard user test cases.', () => {
 
         const menuItems = ['All Items', 'About', 'Logout', 'Reset App State']
 
-        cy.login(fix.normalUser.login, fix.normalUser.password)
         cy.get('#react-burger-menu-btn').should('be.visible').click()
         cy.wait(1000)
         cy.get('nav.bm-item-list').should('be.visible').children().then((children) => {
@@ -58,17 +64,15 @@ describe('Standard user test cases.', () => {
      it('User can access product cart.', function () { 
 
         const itemToCheck = 'Your Cart'
-
-        cy.login(fix.normalUser.login, fix.normalUser.password)
+        
         cy.get('.shopping_cart_link').click()
         cy.get('.title').should('contain.text', itemToCheck)   
     })
 
      it('User can sort product list', function () { 
 
-        const sortByItems = ['Name (A to Z)', 'Name (Z to A)', 'Price (low to high)', 'Price (high to low)']
+        const sortByItems = ['Name (A to Z)', 'Name (Z to A)', 'Price (low to high)', 'Price (high to low)']        
         
-        cy.login(fix.normalUser.login, fix.normalUser.password)
         let i = 0
         while (i < sortByItems.length) {
             sortList(sortByItems[i])
@@ -80,8 +84,7 @@ describe('Standard user test cases.', () => {
         
         let random = Math.floor(Math.random() * 5)
         let product = Object.values(fix.productList)
-
-        cy.login(fix.normalUser.login, fix.normalUser.password)
+        
         cy.get('.shopping_cart_link').within(() =>{
             cy.get('span').should('not.exist')
         })        
@@ -98,8 +101,7 @@ describe('Standard user test cases.', () => {
     it('User can add more than one product to cart.', function () {          
         
         let product = Object.values(fix.productList)
-
-        cy.login(fix.normalUser.login, fix.normalUser.password)
+        
         cy.get('.shopping_cart_link').within(() =>{
             cy.get('span').should('not.exist')
         })        
@@ -117,9 +119,8 @@ describe('Standard user test cases.', () => {
 
     it('User can remove products from cart.', function () { 
         
-        let product = Object.values(fix.productList)        
-
-        cy.login(fix.normalUser.login, fix.normalUser.password)
+        let product = Object.values(fix.productList)
+        
         cy.get('.shopping_cart_link').within(() =>{
             cy.get('span').should('not.exist')
         })        
@@ -150,8 +151,7 @@ describe('Standard user test cases.', () => {
         let product = Object.values(fix.productList)
         const checkout = ['Checkout: Your Information', 'Checkout: Overview', 'Checkout: Complete!']
         const customerInfo = ['Im', 'Tester', '48-156']
-
-        cy.login(fix.normalUser.login, fix.normalUser.password)
+        
         cy.get('.shopping_cart_link').within(() =>{
             cy.get('span').should('not.exist')
         })        
