@@ -174,6 +174,26 @@ describe('Standard user test cases.', () => {
         cy.get('[data-test="finish"]').click()
         cy.get('.title').should('contain.text', checkout[2])
         cy.get('[data-test="back-to-products"]').should('exist')
-    })   
+    })
+})
+    
+describe('Locked user test cases.', () => {   
+
+    let fix
+    beforeEach(function ()  {         
+        
+        cy.fixture('sauce').then(function (sauce)  {
+            fix = sauce           
+            
+            cy.login(fix.lockedUser.login, fix.lockedUser.password)            
+        })        
+    })
+
+    it('User cant login due to locked account.', function () {
+
+        cy.get('[data-test="error"]').should('contain.text', 'Epic sadface: Sorry, this user has been locked out.')
+
+    })
+
 
 })
