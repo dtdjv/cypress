@@ -1,16 +1,47 @@
 /// <reference types="cypress" />
 
-describe('Check if service is avaible.', () => {  
+describe('Check if service is avaible.', () => { 
+    
+    let fix
+    beforeEach(() => {         
+     
+        cy.fixture('sauce').then(function (sauce)  {
 
-    it('User can access login page', function () {
+            fix = sauce                     
+        })        
+    })
+
+    it('User can access login page', () => {
 
         cy.visit('https://www.saucedemo.com/')      
         cy.get('[data-test="username"]').should('be.visible')
         cy.get('[data-test="password"]').should('be.visible')
         cy.get('[data-test="login-button"]').should('be.visible')        
     })
-    
 
+    it('User cant login while providing non existing user name. ', () => {
+
+        const textToCheck = 'Epic sadface: Username and password do not match any user in this service'
+
+        cy.visit('https://www.saucedemo.com/')      
+        cy.visit('https://www.saucedemo.com/')       
+        cy.get('[data-test="username"]').type(fix.noUserinDB.login)
+        cy.get('[data-test="password"]').type(fix.normalUser.password)
+        cy.get('[data-test="login-button"]').click() 
+        cy.get('[data-test="error"]').should('contain.text', textToCheck)    
+    })
+
+    it('User cant login while providing non existing user password. ', () => {
+
+        const textToCheck = 'Epic sadface: Username and password do not match any user in this service'
+
+        cy.visit('https://www.saucedemo.com/')
+        cy.visit('https://www.saucedemo.com/')       
+        cy.get('[data-test="username"]').type(fix.normalUser.login)
+        cy.get('[data-test="password"]').type(fix.noUserinDB.password)
+        cy.get('[data-test="login-button"]').click()      
+        cy.get('[data-test="error"]').should('contain.text', textToCheck)              
+    })
 })
 
 describe('Standard user test cases.', () => {   
@@ -19,9 +50,8 @@ describe('Standard user test cases.', () => {
     beforeEach(function ()  {         
      
         cy.fixture('sauce').then(function (sauce)  {
-            fix = sauce
+            fix = sauce            
             
-            cy.visit('https://www.saucedemo.com/') 
             cy.login(fix.normalUser.login, fix.normalUser.password)            
         })        
     })
@@ -40,7 +70,7 @@ describe('Standard user test cases.', () => {
 
     it('User can login.', function () {
 
-        const itemToCheck = 'Products'
+        const itemToCheck = 'Products'        
         
         cy.get('.title').should('contain.text', itemToCheck)    
      })

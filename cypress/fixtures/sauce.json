@@ -7,13 +7,9 @@
         "login": "locked_out_user",
         "password": "secret_sauce"
     },
-    "problemUser": {
-        "login": "problem_user",
-        "password": "secret_sauce"
-    },
-    "performanceUser": {
-        "login": "performance_glitch_user",
-        "password": "secret_sauce"
+    "noUserinDB": {
+        "login": "do_i_exist",
+        "password": "4815162342"
     },
     "productList": {
         "product1": "Sauce Labs Backpack",
