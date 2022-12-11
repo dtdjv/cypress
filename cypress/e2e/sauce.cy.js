@@ -23,7 +23,6 @@ describe('Check if service is avaible.', () => {
 
         const textToCheck = 'Epic sadface: Username and password do not match any user in this service'
 
-        cy.visit('https://www.saucedemo.com/')      
         cy.visit('https://www.saucedemo.com/')       
         cy.get('[data-test="username"]').type(fix.noUserinDB.login)
         cy.get('[data-test="password"]').type(fix.normalUser.password)
@@ -35,7 +34,6 @@ describe('Check if service is avaible.', () => {
 
         const textToCheck = 'Epic sadface: Username and password do not match any user in this service'
 
-        cy.visit('https://www.saucedemo.com/')
         cy.visit('https://www.saucedemo.com/')       
         cy.get('[data-test="username"]').type(fix.normalUser.login)
         cy.get('[data-test="password"]').type(fix.noUserinDB.password)
