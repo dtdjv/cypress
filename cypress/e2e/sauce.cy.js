@@ -97,7 +97,7 @@ describe('Standard user test cases.', () => {
         cy.get('.title').should('contain.text', itemToCheck)   
     })
 
-     it('User can sort product list', function () { 
+     it('User can sort product list by Name (A to Z)', function () { 
 
         const sortByItems = ['Name (A to Z)', 'Name (Z to A)', 'Price (low to high)', 'Price (high to low)']        
         
