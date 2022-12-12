@@ -97,15 +97,34 @@ describe('Standard user test cases.', () => {
         cy.get('.title').should('contain.text', itemToCheck)   
     })
 
-     it('User can sort product list by Name (A to Z)', function () { 
+     it.only('User can sort product list by Name (A to Z)', function () { 
 
-        const sortByItems = ['Name (A to Z)', 'Name (Z to A)', 'Price (low to high)', 'Price (high to low)']        
+        const sortByItems = ['Name (A to Z)', 'Name (Z to A)', 'Price (low to high)', 'Price (high to low)'] 
+        const list = fix.sortAZ[1]
         
-        let i = 0
-        while (i < sortByItems.length) {
-            sortList(sortByItems[i])
-            i++
-        }
+        cy.get('[data-test="product_sort_container"]').select(sortByItems[0])
+        cy.get('[data-test="product_sort_container"]').should('contain.text', sortByItems[0])
+        cy.get('div.inventory_item_name').its('length').as('length').then((length) =>{
+
+            let i = 0
+            let fix = 1
+
+            while (length > i ) {
+                cy.log(fix)
+                cy.get('div.inventory_item_name').eq(i).invoke('text').then((order) => {  
+                    cy.log(fix)       
+                    expect(order).to.equal(fix.sortAZ[fix])
+                })
+                i++
+                fix++
+            }
+        })
+        
+
+
+        // cy.get('div.inventory_item_name').eq(1).invoke('text').then((order) => {            
+        //     expect(order).to.equal(fix.sortAZ[1])
+        // })
      })
 
      it('User can add one product to cart.', function () {    
