@@ -60,6 +60,25 @@ describe('Standard user test cases.', () => {
         cy.get('[data-test="product_sort_container"]').should('contain.text', sortBy)
     }
 
+    function sortList2 (sortedBy, sortType) {
+
+        const sortByItems = ['Name (A to Z)', 'Name (Z to A)', 'Price (low to high)', 'Price (high to low)']
+        let sort = Object.values(sortedBy) 
+        let i = 0
+        let x = 0       
+        
+        cy.get('[data-test="product_sort_container"]').select(sortByItems[sortType])
+        cy.get('[data-test="product_sort_container"]').should('contain.text', sortByItems[sortType])
+            
+        
+        while ( sort.length > x ) {            
+            cy.get('div.inventory_item_name').eq(x).invoke('text').then((order) => {            
+                expect(order).to.equal(sort[x])                
+                x++    
+            })                                  
+        }   
+    }
+
     function addProduct (product) {
         cy.contains(product).parent().parent().parent().within(() => {
             cy.contains('Add to cart').click()
@@ -100,32 +119,23 @@ describe('Standard user test cases.', () => {
      it.only('User can sort product list by Name (A to Z)', function () { 
 
         const sortByItems = ['Name (A to Z)', 'Name (Z to A)', 'Price (low to high)', 'Price (high to low)'] 
-        const list = ["Sauce Labs Backpack",
-        "Sauce Labs Bike Light",
-        "Sauce Labs Bolt T-Shirt",
-        "Sauce Labs Fleece Jacket",
-         "Sauce Labs Onesie",
-        "Test.allTheThings() T-Shirt (Red)" ]
-        
-        
-        cy.get('[data-test="product_sort_container"]').select(sortByItems[0])
-        cy.get('[data-test="product_sort_container"]').should('contain.text', sortByItems[0])
+        let sortAZ = Object.values(fix.sortAZ)        
+        sortList2(fix.sortAZ, 0)
+        // cy.get('[data-test="product_sort_container"]').select(sortByItems[0])
+        // cy.get('[data-test="product_sort_container"]').should('contain.text', sortByItems[0])
             
-        let i = 0
-        let fix = 0
-        while ( 6 > i ) { //zrobić funkcję, pokombinować z length a jak nie to na pewno z tym fixtures
+        // let i = 0
+        // let x = 0
+        // while ( sortAZ.length > i ) {
             
-            cy.get('div.inventory_item_name').eq(i).invoke('text').then((order) => {                          
+        //     cy.get('div.inventory_item_name').eq(i).invoke('text').then((order) => {                          
                 
-                // expect(order).to.equal(fix.sortAZ[fix])
-                expect(order).to.equal(list[fix])
-                fix++    
-            })
-            i++                        
-        }
-        // cy.get('div.inventory_item_name').eq(0).invoke('text').then((order) => {            
-        //     expect(order).to.equal(fix.sortAZ[1])
-        // })
+        //         expect(order).to.equal(sortAZ[x])
+        //         // expect(order).to.equal(list[x])
+        //         x++    
+        //     })
+        //     i++                        
+        // }   
      })
 
      it('User can add one product to cart.', function () {    
