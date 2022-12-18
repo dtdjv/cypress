@@ -52,12 +52,26 @@ describe('Standard user test cases.', () => {
             
             cy.login(fix.normalUser.login, fix.normalUser.password)            
         })        
-    })
+    })  
 
-    function sortList (sortBy) {
+    function sortList (sortedBy, sortType) {
 
-        cy.get('[data-test="product_sort_container"]').select(sortBy)
-        cy.get('[data-test="product_sort_container"]').should('contain.text', sortBy)
+        const sortByItems = ['Name (A to Z)', 'Name (Z to A)', 'Price (low to high)', 'Price (high to low)']
+        const sort = Object.values(sortedBy)         
+        let x = 0    
+        let i = 0      
+        
+        cy.get('[data-test="product_sort_container"]').select(sortByItems[sortType])
+        cy.get('[data-test="product_sort_container"]').should('contain.text', sortByItems[sortType])
+        cy.log(sortByItems[sortType])
+        
+        while ( sort.length > i ) {            
+            cy.get('div.inventory_item_name').eq(i).invoke('text').then((order) => {                
+                expect(order).to.equal(sort[x])                
+                x++    
+            })
+            i++                        
+        }   
     }
 
     function addProduct (product) {
@@ -97,15 +111,9 @@ describe('Standard user test cases.', () => {
         cy.get('.title').should('contain.text', itemToCheck)   
     })
 
-     it('User can sort product list', function () { 
-
-        const sortByItems = ['Name (A to Z)', 'Name (Z to A)', 'Price (low to high)', 'Price (high to low)']        
+     it('User can sort product list by Name (A to Z)', function () {         
         
-        let i = 0
-        while (i < sortByItems.length) {
-            sortList(sortByItems[i])
-            i++
-        }
+       sortList(fix.sortAZ, 0)      
      })
 
      it('User can add one product to cart.', function () {    

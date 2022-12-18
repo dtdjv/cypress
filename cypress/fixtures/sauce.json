@@ -18,5 +18,37 @@
         "product4": "Sauce Labs Fleece Jacket",
         "product5": "Sauce Labs Onesie",
         "product6": "Test.allTheThings() T-Shirt (Red)"        
+    },
+    "sortAZ": {
+        "az1": "Sauce Labs Backpack",
+        "az2": "Sauce Labs Bike Light",
+        "az3": "Sauce Labs Bolt T-Shirt",
+        "az4": "Sauce Labs Fleece Jacket",
+        "az5": "Sauce Labs Onesie",
+        "az6": "Test.allTheThings() T-Shirt (Red)"   
+    },
+    "sortZA": {
+        "za1": "Test.allTheThings() T-Shirt (Red)",
+        "za2": "Sauce Labs Onesie",
+        "za3": "Sauce Labs Fleece Jacket",
+        "za4": "Sauce Labs Bolt T-Shirt",
+        "za5": "Sauce Labs Bike Light",
+        "za6": "Sauce Labs Backpack"
+    },
+    "priceLoHi": {
+        "lh1": "Sauce Labs Onesie",
+        "lh2": "Sauce Labs Bike Light",
+        "lh3": "Sauce Labs Bolt T-Shirt",
+        "lh4": "Test.allTheThings() T-Shirt (Red)",
+        "lh5": "Sauce Labs Backpack",
+        "lh6": "Sauce Labs Fleece Jacket"        
+    },
+    "priceHiLo": {
+        "hl1": "Sauce Labs Fleece Jacket",
+        "hl2": "Sauce Labs Backpack",
+        "hl3": "Test.allTheThings() T-Shirt (Red)",
+        "hl4": "Sauce Labs Bolt T-Shirt",
+        "hl5": "Sauce Labs Bike Light",
+        "hl6": "Sauce Labs Onesie"        
     }
 }
