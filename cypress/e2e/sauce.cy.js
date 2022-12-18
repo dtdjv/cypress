@@ -63,8 +63,7 @@ describe('Standard user test cases.', () => {
     function sortList2 (sortedBy, sortType) {
 
         const sortByItems = ['Name (A to Z)', 'Name (Z to A)', 'Price (low to high)', 'Price (high to low)']
-        let sort = Object.values(sortedBy) 
-        let i = 0
+        const sort = Object.values(sortedBy)         
         let x = 0       
         
         cy.get('[data-test="product_sort_container"]').select(sortByItems[sortType])
@@ -119,8 +118,9 @@ describe('Standard user test cases.', () => {
      it.only('User can sort product list by Name (A to Z)', function () { 
 
         const sortByItems = ['Name (A to Z)', 'Name (Z to A)', 'Price (low to high)', 'Price (high to low)'] 
-        let sortAZ = Object.values(fix.sortAZ)        
-        sortList2(fix.sortAZ, 0)
+        let sortAZ = Object.values(fix.sortAZ) 
+        cy.visit('https://www.saucedemo.com/')       
+        // sortList2(fix.sortAZ, 0)
         // cy.get('[data-test="product_sort_container"]').select(sortByItems[0])
         // cy.get('[data-test="product_sort_container"]').should('contain.text', sortByItems[0])
             
