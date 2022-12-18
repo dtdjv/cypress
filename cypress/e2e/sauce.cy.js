@@ -52,29 +52,25 @@ describe('Standard user test cases.', () => {
             
             cy.login(fix.normalUser.login, fix.normalUser.password)            
         })        
-    })
+    })  
 
-    function sortList (sortBy) {
-
-        cy.get('[data-test="product_sort_container"]').select(sortBy)
-        cy.get('[data-test="product_sort_container"]').should('contain.text', sortBy)
-    }
-
-    function sortList2 (sortedBy, sortType) {
+    function sortList (sortedBy, sortType) {
 
         const sortByItems = ['Name (A to Z)', 'Name (Z to A)', 'Price (low to high)', 'Price (high to low)']
         const sort = Object.values(sortedBy)         
-        let x = 0       
+        let x = 0    
+        let i = 0      
         
         cy.get('[data-test="product_sort_container"]').select(sortByItems[sortType])
         cy.get('[data-test="product_sort_container"]').should('contain.text', sortByItems[sortType])
-            
+        cy.log(sortByItems[sortType])
         
-        while ( sort.length > x ) {            
-            cy.get('div.inventory_item_name').eq(x).invoke('text').then((order) => {            
+        while ( sort.length > i ) {            
+            cy.get('div.inventory_item_name').eq(i).invoke('text').then((order) => {                
                 expect(order).to.equal(sort[x])                
                 x++    
-            })                                  
+            })
+            i++                        
         }   
     }
 
@@ -115,27 +111,9 @@ describe('Standard user test cases.', () => {
         cy.get('.title').should('contain.text', itemToCheck)   
     })
 
-     it.only('User can sort product list by Name (A to Z)', function () { 
-
-        const sortByItems = ['Name (A to Z)', 'Name (Z to A)', 'Price (low to high)', 'Price (high to low)'] 
-        let sortAZ = Object.values(fix.sortAZ) 
-        cy.visit('https://www.saucedemo.com/')       
-        // sortList2(fix.sortAZ, 0)
-        // cy.get('[data-test="product_sort_container"]').select(sortByItems[0])
-        // cy.get('[data-test="product_sort_container"]').should('contain.text', sortByItems[0])
-            
-        // let i = 0
-        // let x = 0
-        // while ( sortAZ.length > i ) {
-            
-        //     cy.get('div.inventory_item_name').eq(i).invoke('text').then((order) => {                          
-                
-        //         expect(order).to.equal(sortAZ[x])
-        //         // expect(order).to.equal(list[x])
-        //         x++    
-        //     })
-        //     i++                        
-        // }   
+     it('User can sort product list by Name (A to Z)', function () {         
+        
+       sortList(fix.sortAZ, 0)      
      })
 
      it('User can add one product to cart.', function () {    
