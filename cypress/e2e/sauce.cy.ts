@@ -54,7 +54,7 @@ describe('Standard user test cases.', () => {
         })        
     })  
 
-    function sortList (sortedBy, sortType) {
+    function sortList (sortedBy: string, sortType:string) {
 
         const sortByItems = ['Name (A to Z)', 'Name (Z to A)', 'Price (low to high)', 'Price (high to low)']
         const sort = Object.values(sortedBy)         
